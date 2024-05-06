@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page - Wacthies</title>
+    <link rel="stylesheet" href="./css/website.css">
+    <link rel="stylesheet" href="./css/movie.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
+                </div>
+                <div class="nav-items">
+                <div class="dropdown">
+                    <label class="dropdown-label-landscape">Showing cinemas in:</label>
+                    <label class="dropdown-label-portrait">City:</label>
+                    <select class="dropdown-menu" onchange="changeCity()">
+                        <option value="brisbane" selected>Brisbane</option>
+                        <option value="sydney">Sydney</option>
+                        <option value="melbourne">Melbourne</option>
+                    </select>
+                </div>
+                <button class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="movie">
+            <div class="movie-info">
+                <div class="movie-info-poster">
+                    <img class="movie-info-poster-image"></img>
+                </div>
+                <div class="movie-info-description">
+                    <h1 class="movie-info-description-title"></h1>
+                    <p class="movie-info-description-text"></p>
+                </div>
+            </div>
+            <div class="movie-rating">
+                <p>1/10</p>
+            </div>
+        </section>
+        <section class="cinema-section">
+            <div class="cinemas">
+                <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
+                <div class="cinemas-container">
+
+                </div>
+                <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
+            </div>
+        </section>
+    </main>
+<script>
+    const movieString = sessionStorage.getItem('movie');
+    const movie = JSON.parse(movieString);
+    console.log(movie);
+    document.getElementsByClassName('movie-info-poster-image')[0].src = movie.image_url;
+    document.getElementsByClassName('movie-info-description-title')[0].innerHTML = movie.title;
+    document.getElementsByClassName('movie-info-description-text')[0].innerHTML = movie.description;
+    
+    const cinemasContainer = document.getElementsByClassName('cinemas-container')[0];
+    const cinemaList = [...new Set(movie.cinema_details.map(cinema => cinema.cinema_name))];
+    cinemaList.forEach((cinema, index) => {
+        const divElement = document.createElement('div');
+        const imageElement = document.createElement('img');
+        imageElement.src = "https://cdn.openart.ai/published/Z7JQy3xW9aJK3SY471q7/3d5YZhxm_N1Tt_1024.webp";
+        const itemName = document.createTextNode(cinema);
+        divElement.appendChild(imageElement);
+        divElement.appendChild(itemName);
+        cinemasContainer.appendChild(divElement);
+        if(index == 0) {
+            divElement.classList.add('first-cinema');
+        } else if (index == cinemaList.length-1) {
+            divElement.classList.add('last-cinema');
+        } else {
+            divElement.classList.add('cinemas-container-div');
+        }
+        divElement.addEventListener('click', function(event) {
+                    sessionStorage.setItem('movie', JSON.stringify(movie));
+                    window.location.href = 'movie.html';
+                })
+    });
+
+</script>
+</body>
+
+</html>

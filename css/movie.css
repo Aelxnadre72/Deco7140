@@ -1,0 +1,206 @@
+main {
+    padding: 0;
+    width: 100vw;
+  }
+
+main h1 {
+    font-size: 1.4rem;
+    margin-top: 2vh;
+}
+
+.movie {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.movie-info-poster {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.movie-info-poster-image {
+    margin-top: 3vh;
+    width: 80%;
+}
+
+.movie-info-description {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.movie-info-description-title {
+    text-align: center;
+}
+
+.movie-info-description-text {
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0 7vw;
+    margin: 0;
+    line-height: 1;
+}
+
+.movie-rating {
+    width: 100%;
+}
+
+.cinemas {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-y: hidden;
+}
+
+.cinemas-left-arrow {
+    text-align: right;
+    height: 100%;
+    max-height: 100%;
+    width: 2vw;
+    margin-bottom: 4.6vh;
+    user-select: none;
+    align-content: center;
+    cursor: pointer;
+}
+
+.cinemas-right-arrow {
+    text-align: right;
+    height: 100%;
+    max-height: 100%;
+    width: 2vw;
+    margin-bottom: 4.6vh;
+    user-select: none;
+    align-content: center;
+    transform: scaleX(-1);
+    cursor: pointer;
+}
+
+.cinemas-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 2vw;
+}
+
+.cinemas-container img {
+    height: 55%;
+    width: 98%;
+    object-position: center;
+    object-fit: cover;
+}
+
+.cinemas-container-div {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    width: 48%;
+}
+
+.first-cinema {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    width: 48%;
+}
+
+.last-cinema {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    width: 48%;
+}
+  
+@media screen and (min-width: 768px) {
+
+    .movie-info {
+        flex-direction: row;
+    }
+
+    .movie-info-poster {
+        width: 50%;
+    }
+    
+    .movie-info-poster-image {
+        width: 50%;
+    }
+    
+    .movie-info-description {
+        width: 50%;
+    }
+
+    .cinemas-container-div {
+        padding: 15px 0;
+        margin: 0 0.5vw;
+    }
+
+    .cinemas-container {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .cinemas-container-div:hover {
+        transform: scale(1.08);
+        transition: transform 0.3s ease;
+    }
+
+    .cinemas-left-arrow:hover {
+        background: linear-gradient(180deg, black, black, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), black, black);
+    }
+
+    .cinemas-right-arrow:hover {
+        background: linear-gradient(180deg, black, black, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), black, black);
+    }
+
+    .first-cinema {
+        margin-right: 0.5vw;
+        margin-left: 0;
+        padding: 15px 0;
+    }
+
+    .last-cinema {
+        margin-left: 0.5vw;
+        margin-right: 0;
+        padding: 15px 0;
+    }
+
+    .first-cinema:hover {
+        transform: scale(1.08);
+        transition: transform 0.3s ease;
+    }
+
+    .last-cinema:hover {
+        transform: scale(1.08);
+        transition: transform 0.3s ease;
+    }
+
+
+    main h1 {
+        font-size: 1.4rem;
+        margin-top: 2vh;
+    }
+
+}

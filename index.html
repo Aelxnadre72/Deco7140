@@ -1,1 +1,373 @@
-<html><head></head></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page - Wacthies</title>
+    <link rel="stylesheet" href="./css/website.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
+                </div>
+                <div class="nav-items">
+                <div class="dropdown">
+                    <label class="dropdown-label-landscape">Showing cinemas in:</label>
+                    <label class="dropdown-label-portrait">City:</label>
+                    <select class="dropdown-menu" onchange="changeCity()">
+                        <option value="brisbane" selected>Brisbane</option>
+                        <option value="sydney">Sydney</option>
+                        <option value="melbourne">Melbourne</option>
+                    </select>
+                </div>
+                <button class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>            
+        <h1>Currently in cinemas</h1>
+        <section class="movies">
+            <h1 onclick="leftScroll('movies-container')" class="movies-left-arrow"><</h1>
+            <div class="movies-container">
+
+            </div>
+            <h1 onclick="rightScroll('movies-container')" class="movies-right-arrow"><</h1>
+        </section>
+        
+        <h1>Cinemas in Brisbane</h1>
+        <section class="cinemas">
+            <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
+            <div class="cinemas-container">
+
+            </div>
+            <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
+        </section>
+    </main>
+    
+      <script>
+        const baseURL = "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/movies/";
+
+        const requestOptions = { 
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        async function fetchData() {
+            const response = await fetch(baseURL, requestOptions);
+            const data = await response.json();
+            return data;
+        }
+
+        const moviesContainer = document.getElementsByClassName('movies-container')[0];
+        const cinemasContainer = document.getElementsByClassName('cinemas-container')[0];
+
+        fetchData().then(data => {
+            data.forEach((movie, index) => {
+                const divElement = document.createElement('div');
+                const imageElement = document.createElement('img');
+                imageElement.src = movie.image_url;
+                imageElement.alt = "Poster of the movie: " + movie.title;
+                //imageElement.classList.add('listImage');
+                const itemName = document.createTextNode(movie.title);
+                divElement.appendChild(imageElement);
+                divElement.appendChild(itemName);
+                moviesContainer.appendChild(divElement);
+                if(index == 0) {
+                    divElement.classList.add('first-movie');
+                } else if (index == data.length-1) {
+                    divElement.classList.add('last-movie');
+                } else {
+                    divElement.classList.add('movies-container-div');
+                }
+                divElement.addEventListener('click', function(event) {
+                    sessionStorage.setItem('movie', JSON.stringify(movie));
+                    window.location.href = 'movie.html';
+                })
+            });
+
+            const cinemaList = [...new Set(data.flatMap(movie => movie.cinema_details
+            .map(cinema => cinema.cinema_name)))];
+            cinemaList.forEach((cinema, index) => {
+                    const divElement = document.createElement('div');
+                    const imageElement = document.createElement('img');
+                    imageElement.src = "https://cdn.openart.ai/published/Z7JQy3xW9aJK3SY471q7/3d5YZhxm_N1Tt_1024.webp";
+                    const itemName = document.createTextNode(cinema);
+                    divElement.appendChild(imageElement);
+                    divElement.appendChild(itemName);
+                    cinemasContainer.appendChild(divElement);
+                    if(index == 0) {
+                        divElement.classList.add('first-cinema');
+                    } else if (index == cinemaList.length-1) {
+                        divElement.classList.add('last-cinema');
+                    } else {
+                        divElement.classList.add('cinemas-container-div');
+                    }
+                });
+        });
+
+        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+        function leftScroll(containerType) {
+            const listContainer = document.getElementsByClassName(containerType)[0];
+            listContainer.scrollBy({
+                left: -vh * 0.34,
+                behavior: 'smooth'
+            });
+        }
+
+        function rightScroll(containerType) {
+            const listContainer = document.getElementsByClassName(containerType)[0];
+            listContainer.scrollBy({
+                left: vh * 0.34,
+                behavior: 'smooth'
+            });
+        }
+
+        function changeCity() {
+            alert("Sorry, we are currently not operating in your city.");
+            document.getElementsByClassName('dropdown-menu')[0].querySelector('option[value="brisbane"]').selected = true;
+        }
+
+
+      </script>
+
+
+
+
+
+    <!--
+    <nav style="position: fixed; top: 2vh; left: 0px; width: 60vw; display: flex; justify-content: space-between;">
+        <button class="logOutBtn" onclick="logOut()"><p style="margin:2px;padding:2px;">LOG OUT</p></button>
+        <button class="dexBtn" onclick="toGame()"><p style="margin:2px;padding:2px;">RETURN</p></button>
+    </nav>
+    <div class="dex-container">
+        <div class="details-pane">
+            <div id="defaultMessage">Click on an animal to display information</div>
+            <div id="detailContent" style="display: none;">
+                <img id="detailImage" src="" alt="Selected Element Image">
+                <h2 id="detailName"></h2>
+                <p><span>Common name:</span> <span id="detailCommonName"></span></p>
+                <p><span>Scientific name:</span> <span id="detailScientificName"></span></p>
+                <p><span>Family:</span> <span id="detailFamily"></span></p>
+                <p><span>Genus:</span> <span id="detailGenus"></span></p>
+                <p><span>Class:</span> <span id="detailClass"></span></p>
+            </div>
+        </div>
+
+        <div class="list-pane">
+            <ul id="dexList"></ul>
+        </div>
+    </div>
+
+    <p id="collected" style="position: fixed; bottom: 0px; left: 0vw; width: 60vw; text-align: center; font-size: 1.2rem;"></p>
+
+    <script>
+        // Redirects to login if not logged in
+        if(!localStorage.getItem("currentUsername") || localStorage.getItem("currentUsername") === ""){
+            window.location.href = 'index.html';
+        }
+
+        // Handles the out button
+        function logOut() {
+            localStorage.setItem("currentUsername", "")
+            window.location.href = 'index.html';
+        }
+
+        // Handles the return button
+        function toGame() {
+            window.location.href = 'gamePage.html';
+        }
+
+        // Fetches the animals from the API
+        async function fetchData() {
+            const result = await fetch("https://api.ala.org.au/species/search?q=&fq=conservationStatusQLD_s:%22Endangered%22&&start=0&pageSize=1000&sort=commonNameSingle&dir=desc");
+            const value = await result.json();
+            return value;
+        }
+
+        let faultyAnimals = ["Mahogany Glider", "Pacific Ridley Turtle", "Leathery Turtle"];
+        let filteredData = [];
+        let data = [];
+        // Filters the animal list and creates animal objects with desired data fields
+        fetchData().then(response => {
+            filteredData = response.searchResults.results.filter(animal => {
+                return animal.kingdom === "ANIMALIA" && "thumbnailUrl" in animal && !faultyAnimals.includes(animal.commonNameSingle)
+            });
+            data = filteredData.map((animal) => ({
+                id: animal.id,
+                thumbnailUrl: animal.thumbnailUrl, 
+                commonName: animal.commonNameSingle,
+                scientificName: animal.scientificName,
+                occurrenceCount: animal.occurrenceCount,
+                family: animal.family, 
+                genus: animal.genus,
+                class: animal.class, 
+            }));
+            // sort alphabetically in ascending order
+            data.sort((a, b) => a.commonName.localeCompare(b.commonName));
+            populateList();
+        });
+
+        // Object for the uncollected animals
+        let dummyData = {
+            id: "???????????????",
+            thumbnailUrl: "qstn.png", 
+            commonName: "???????????????",
+            scientificName: "???????????????",
+            occurrenceCount: "???????????????",
+            family: "???????????????", 
+            genus: "???????????????",
+            class: "????????????????", 
+        }
+
+        // Get the users animal list
+        let username = localStorage.getItem("currentUsername");
+        let discoveredListKey = username + "_discovered";
+        let discoveredList = JSON.parse(localStorage.getItem(discoveredListKey));
+
+        // Add the animals from the API to the displayed list
+        function populateList() {
+            // if not empty
+            if(discoveredList) {
+                document.getElementById("collected").innerText = `Collected ${discoveredList.length}/${data.length}`
+            }
+            // if empty/new user
+            else {
+                document.getElementById("collected").innerText = `Collected 0/${data.length}`
+            }
+
+            const dexList = document.getElementById('dexList');
+            // create each entry in the list
+            data.forEach((item, index) => {
+                const listItem = document.createElement('li');
+
+                let itemName;
+                const imageElement = document.createElement('img');
+                if(discoveredList.includes(item.id)) {
+                    itemName = document.createTextNode(item.commonName);
+                    imageElement.src = item.thumbnailUrl; // Set the source URL for the image if collected
+                }
+                else {
+                    itemName = document.createTextNode(dummyData.commonName);
+                    imageElement.src = dummyData.thumbnailUrl; // Set the source URL for the image if not collected
+                }
+
+                imageElement.alt = 'Image in list'
+                imageElement.classList.add('listImage');
+                listItem.appendChild(imageElement);
+                listItem.appendChild(itemName);
+
+                // add eventlistener for clicking on the animal name in the list
+                listItem.addEventListener('click', () => {
+                    if(discoveredList.includes(item.id)) {
+                        displayDetails(item);
+                    }
+                    else {
+                        displayDetails(dummyData);
+                    }
+
+                    scrollToCenter(listItem);
+
+                    // Deselect previously selected items
+                    const selectedItems = document.querySelectorAll('.list-pane li.selected');
+                    selectedItems.forEach(selectedItem => {
+                        selectedItem.classList.remove('selected');
+                    });
+
+                    // Select the current item
+                    listItem.classList.add('selected');
+                });
+                
+                dexList.appendChild(listItem);
+            });
+            
+            // Scroll to the fourth entry in the list in the beginning
+            if (data.length > 3) {
+                const fourthItem = document.querySelectorAll('.list-pane li')[3];
+                if (fourthItem) {
+                    document.querySelector('.list-pane').scrollTop = fourthItem.offsetTop - (document.querySelector('.list-pane').offsetHeight / 2) + (fourthItem.offsetHeight / 2);
+                }
+            }
+            // set classes used for css to achieve the scrolling animation
+            adjustListStyling();
+        }
+
+        // Show the details of the entry when clicking on it
+        function displayDetails(item) {
+            // Hide the default message
+            document.getElementById('defaultMessage').style.display = "none";
+            
+            // Show the details content
+            document.getElementById('detailContent').style.display = "block";
+            document.getElementById('detailImage').src = item.thumbnailUrl;
+            document.getElementById('detailCommonName').innerText = item.commonName;
+            document.getElementById('detailScientificName').innerText = item.scientificName;
+            document.getElementById('detailFamily').innerText = item.family;
+            document.getElementById('detailGenus').innerText = item.genus;
+            document.getElementById('detailClass').innerText = item.class;
+            
+            const index = data.findIndex(dataItem => dataItem.name === item.name);
+            const targetItem = document.querySelectorAll('.list-pane li')[index];
+            // Helps scroll to the selected entry in the list
+            if (targetItem) {
+                document.querySelector('.list-pane').scrollTop = targetItem.offsetTop - (document.querySelector('.list-pane').offsetHeight / 2) + (targetItem.offsetHeight / 2);
+            }
+        }
+        
+        // Adjust styling based on scroll position
+        function adjustListStyling() {
+            const items = document.querySelectorAll('.list-pane li');
+            const paneHeight = document.querySelector('.list-pane').offsetHeight;
+            const center = paneHeight / 2;
+
+            items.forEach((item, idx) => {
+                const itemCenter = item.offsetTop + (item.offsetHeight / 2) - document.querySelector('.list-pane').scrollTop;
+                const distanceFromCenter = Math.abs(center - itemCenter);
+
+                // Sets different classes based on how far the are from the center in the list to achieve the scroll animation
+                if (distanceFromCenter < 30) {
+                    item.classList.add('center');
+                    item.classList.remove('adjacent', 'far', 'further', 'evenfurther', 'furtherthanfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else if (distanceFromCenter < 80) {
+                    item.classList.add('adjacent');
+                    item.classList.remove('center', 'far', 'further', 'evenfurther', 'furtherthanfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else if (distanceFromCenter < 130) {
+                    item.classList.add('far');
+                    item.classList.remove('center', 'adjacent', 'further', 'evenfurther', 'furtherthanfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else if (distanceFromCenter < 180) {
+                    item.classList.add('further');
+                    item.classList.remove('center', 'adjacent', 'far', 'evenfurther', 'furtherthanfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else if (distanceFromCenter < 210) {
+                    item.classList.add('evenfurther');
+                    item.classList.remove('center', 'adjacent', 'far', 'further', 'furtherthanfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else if (distanceFromCenter < 250) {
+                    item.classList.add('furtherthanfurther');
+                    item.classList.remove('center', 'adjacent', 'far', 'further', 'evenfurther', 'furthermost', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                } else {
+                    item.classList.add('furthermost');
+                    item.classList.remove('center', 'adjacent', 'far', 'further', 'evenfurther', 'furtherthanfurther', 'extremelyfar', 'unbelievablyfar', 'arewestillgoing', 'infinityandbeyond', 'pointofnoreturn', 'infinity');
+                }
+            });
+        }
+
+        // Scrolls to the selected entry in the list
+        function scrollToCenter(element) {
+            const listPane = document.querySelector('.list-pane');
+            const paneHeight = listPane.offsetHeight;
+            listPane.scrollTop = element.offsetTop - (paneHeight / 2) + (element.offsetHeight / 2);
+        }
+
+        // Add eventListener for when scrolling
+        document.querySelector('.list-pane').addEventListener('scroll', adjustListStyling);
+    </script>
+    -->
+</body>
+
+</html>
