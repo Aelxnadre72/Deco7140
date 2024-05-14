@@ -48,7 +48,7 @@ main h1 {
     font-size: 0.85rem;
     padding: 0 7vw;
     margin: 0;
-    line-height: 1;
+    line-height: 1.4;
 }
 
 .movie-rating {
@@ -141,14 +141,25 @@ main h1 {
 
     .movie-info-poster {
         width: 50%;
+        justify-content: flex-end;
     }
     
     .movie-info-poster-image {
         width: 50%;
+        padding-right: 5%;
     }
     
     .movie-info-description {
         width: 50%;
+    }
+
+    .movie-info-description-title {
+        width: 60%;
+    }
+
+    .movie-info-description-text {
+        width: 60%;
+        padding: 0;
     }
 
     .cinemas-container-div {
