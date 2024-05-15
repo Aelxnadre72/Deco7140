@@ -136,6 +136,7 @@ main h1 {
     width: 28vh;
     object-position: center;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .cinemas-container-div {
@@ -259,6 +260,14 @@ main h1 {
     main h1 {
         font-size: 1.4rem;
         margin-top: 2vh;
+    }
+
+    .movies-title {
+        padding-left: 3.3vw;
+    }
+
+    .cinemas-title {
+        padding-left: 3.3vw;
     }
 
 }

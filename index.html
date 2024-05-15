@@ -32,7 +32,7 @@
     </header>
 
     <main>            
-        <h1>Currently in cinemas</h1>
+        <h1 class="movies-title">Currently in cinemas</h1>
         <section class="movies">
             <h1 onclick="leftScroll('movies-container')" class="movies-left-arrow"><</h1>
             <div class="movies-container">
@@ -41,7 +41,7 @@
             <h1 onclick="rightScroll('movies-container')" class="movies-right-arrow"><</h1>
         </section>
         
-        <h1>Cinemas in Brisbane</h1>
+        <h1 class="cinemas-title">Cinemas in Brisbane</h1>
         <section class="cinemas">
             <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
             <div class="cinemas-container">
@@ -59,7 +59,7 @@
             redirect: 'follow'
         };
 
-        async function fetchData() {
+         const fetchData = async () => {
             const response = await fetch(baseURL, requestOptions);
             const data = await response.json();
             return data;
@@ -74,7 +74,6 @@
                 const imageElement = document.createElement('img');
                 imageElement.src = movie.image_url;
                 imageElement.alt = "Poster of the movie: " + movie.title;
-                //imageElement.classList.add('listImage');
                 const itemName = document.createTextNode(movie.title);
                 divElement.appendChild(imageElement);
                 divElement.appendChild(itemName);
@@ -114,7 +113,7 @@
 
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-        function leftScroll(containerType) {
+        const leftScroll = (containerType) => {
             const listContainer = document.getElementsByClassName(containerType)[0];
             listContainer.scrollBy({
                 left: -vh * 0.34,
@@ -122,7 +121,7 @@
             });
         }
 
-        function rightScroll(containerType) {
+        const rightScroll = (containerType) => {
             const listContainer = document.getElementsByClassName(containerType)[0];
             listContainer.scrollBy({
                 left: vh * 0.34,
@@ -130,13 +129,10 @@
             });
         }
 
-        function changeCity() {
-            alert("Sorry, we are currently not operating in your city.");
-            document.getElementsByClassName('dropdown-menu')[0].querySelector('option[value="brisbane"]').selected = true;
-        }
+    </script>
 
+    <script src="./js/changeCity.js"></script>
 
-      </script>
 
 
 

@@ -29,7 +29,10 @@ main h1 {
 
 .movie-info-poster-image {
     margin-top: 3vh;
-    width: 80%;
+    height: 90vw;
+    width: 61.875vw;
+    object-position: center;
+    object-fit: cover;
 }
 
 .movie-info-description {
@@ -55,8 +58,22 @@ main h1 {
     width: 100%;
 }
 
-.cinemas {
+.cinemas-section {
     width: 100vw;
+}
+
+.cinema-section-content {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.cinemas-section-title {
+    text-align: center;
+}
+
+.cinemas {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -64,26 +81,28 @@ main h1 {
 }
 
 .cinemas-left-arrow {
-    text-align: right;
-    height: 100%;
-    max-height: 100%;
-    width: 2vw;
+    text-align: center;
+    height: 7vw;
+    max-height: 7vw;
+    width: 5vw;
     margin-bottom: 4.6vh;
     user-select: none;
     align-content: center;
     cursor: pointer;
+    display: none;
 }
 
 .cinemas-right-arrow {
-    text-align: right;
-    height: 100%;
-    max-height: 100%;
-    width: 2vw;
+    text-align: center;
+    height: 7vw;    
+    max-height: 7vw;
+    width: 5vw;
     margin-bottom: 4.6vh;
     user-select: none;
     align-content: center;
     transform: scaleX(-1);
     cursor: pointer;
+    display: none;
 }
 
 .cinemas-container {
@@ -92,52 +111,104 @@ main h1 {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 2vw;
+    padding: 0 5vw;
+    margin-bottom: 2rem;
 }
 
 .cinemas-container img {
-    height: 55%;
-    width: 98%;
+    height: 100%;
+    width: 100%;
     object-position: center;
     object-fit: cover;
+    border-radius: 10px;
+    align-self: center;
 }
 
 .cinemas-container-div {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
     text-align: center;
     align-items: center;
     cursor: pointer;
     width: 48%;
+    height: 32vw;
 }
 
 .first-cinema {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
     text-align: center;
+    align-items: center;
     cursor: pointer;
     width: 48%;
+    height: 32vw;
 }
 
 .last-cinema {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
     text-align: center;
+    align-items: center;
     cursor: pointer;
     width: 48%;
+    height: 32vw;
+}
+
+.cinemas-times {
+    display: flex;
+    width: 80%;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5vw;
+    margin-bottom: 5vw;
+    border-radius: 10px;
+    background-color: #1b1b1b;
+}
+
+.session-info {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+}
+
+.session-info-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.session-info-column p {
+    margin: 0.5vh 0;
 }
   
 @media screen and (min-width: 768px) {
 
-    .movie-info {
-        flex-direction: row;
+    main {
+        display: flex;
+        margin-top: 2vh;
     }
+
+    .movie {
+        width: 50%;
+    }
+
+    .movie-info {
+        flex-direction: row;    }
 
     .movie-info-poster {
         width: 50%;
@@ -145,32 +216,82 @@ main h1 {
     }
     
     .movie-info-poster-image {
-        width: 50%;
-        padding-right: 5%;
+        width: 20vw;
+        height: 29.09vw;
+        object-position: center;
+        object-fit: cover;
+        margin-left: 20%;
     }
     
     .movie-info-description {
         width: 50%;
+        margin-top: 3vh;
+        justify-content: start;
     }
 
     .movie-info-description-title {
-        width: 60%;
+        font-size: 1.2rem;
+        text-align: start;
+        width: 75%;
+        margin-bottom: 2vh;
+        margin-left: 5%;
+        margin-top: 0;
     }
 
     .movie-info-description-text {
-        width: 60%;
+        font-size: 0.9rem;
+        text-align: start;
+        width: 75%;
+        height: 26vw;
         padding: 0;
+        margin: 0 5%;
+        overflow: scroll;
+    }
+
+    .cinemas-section {
+        display: flex;
+        flex-direction: column;
+        width: 45%;
+        margin-top: 3vh;
+        padding-bottom: 5vh;
+        height: 70vh;
+    }
+
+    .cinemas-section-title {
+        margin: 0;
+        padding: 0;
+        text-align: start;
+    }
+
+    .cinema-section-content {
+        flex-direction: column;
+        background-color: #1b1b1b;
+        border-radius: 10px;
+        padding-top: 2vh;
+        margin-top: 2vh;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cinemas {
+        width: 100%;
+        align-items: flex-start;
     }
 
     .cinemas-container-div {
         padding: 15px 0;
         margin: 0 0.5vw;
+        width: auto;
+        height: auto;
     }
 
     .cinemas-container {
         flex-wrap: nowrap;
         overflow-x: scroll;
         overflow-y: hidden;
+        padding: 0;
+        font-size: 0.9rem;
+        justify-content: flex-start;
     }
 
     .cinemas-container-div:hover {
@@ -178,24 +299,45 @@ main h1 {
         transition: transform 0.3s ease;
     }
 
+    .cinemas-container img {
+        height: 7.9vw;
+        width: 11.6vw;
+    }
+
+    .cinemas-left-arrow {
+        display: block;
+    }
+
     .cinemas-left-arrow:hover {
-        background: linear-gradient(180deg, black, black, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), black, black);
+        background: linear-gradient(180deg, #1b1b1b, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), #1b1b1b);
+    }
+
+    .cinemas-right-arrow {
+        display: block;
     }
 
     .cinemas-right-arrow:hover {
-        background: linear-gradient(180deg, black, black, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), black, black);
+        background: linear-gradient(180deg, #1b1b1b, rgba(255, 255, 255, 0.150), rgba(255, 255, 255, 0.150), #1b1b1b);
     }
 
     .first-cinema {
         margin-right: 0.5vw;
         margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 15px 0;
+        width: auto;
+        height: auto;
     }
 
     .last-cinema {
         margin-left: 0.5vw;
         margin-right: 0;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 15px 0;
+        width: auto;
+        height: auto;
     }
 
     .first-cinema:hover {
@@ -208,6 +350,16 @@ main h1 {
         transition: transform 0.3s ease;
     }
 
+    .cinemas-times {
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 0;
+        margin-bottom: 5vh;
+        border-radius: 0px;
+        background-color: #00000000;
+    }
 
     main h1 {
         font-size: 1.4rem;

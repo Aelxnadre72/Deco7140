@@ -45,48 +45,108 @@
                 <p>1/10</p>
             </div>
         </section>
-        <section class="cinema-section">
-            <div class="cinemas">
-                <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
-                <div class="cinemas-container">
-
+        <section class="cinemas-section">
+            <h1 class="cinemas-section-title">Choose your cinema</h1>
+            <div class="cinema-section-content">
+                <div class="cinemas">
+                    <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
+                    <div class="cinemas-container">
+                    </div>
+                    <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
                 </div>
-                <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
+                <div class="cinemas-times"></div>
             </div>
         </section>
     </main>
-<script>
-    const movieString = sessionStorage.getItem('movie');
-    const movie = JSON.parse(movieString);
-    console.log(movie);
-    document.getElementsByClassName('movie-info-poster-image')[0].src = movie.image_url;
-    document.getElementsByClassName('movie-info-description-title')[0].innerHTML = movie.title;
-    document.getElementsByClassName('movie-info-description-text')[0].innerHTML = movie.description;
-    
-    const cinemasContainer = document.getElementsByClassName('cinemas-container')[0];
-    const cinemaList = [...new Set(movie.cinema_details.map(cinema => cinema.cinema_name))];
-    cinemaList.forEach((cinema, index) => {
-        const divElement = document.createElement('div');
-        const imageElement = document.createElement('img');
-        imageElement.src = "https://cdn.openart.ai/published/Z7JQy3xW9aJK3SY471q7/3d5YZhxm_N1Tt_1024.webp";
-        const itemName = document.createTextNode(cinema);
-        divElement.appendChild(imageElement);
-        divElement.appendChild(itemName);
-        cinemasContainer.appendChild(divElement);
-        if(index == 0) {
-            divElement.classList.add('first-cinema');
-        } else if (index == cinemaList.length-1) {
-            divElement.classList.add('last-cinema');
-        } else {
-            divElement.classList.add('cinemas-container-div');
+
+    <script>
+        const movieString = sessionStorage.getItem('movie');
+        const movie = JSON.parse(movieString);
+        console.log(movie);
+        document.getElementsByClassName('movie-info-poster-image')[0].src = movie.image_url;
+        document.getElementsByClassName('movie-info-description-title')[0].innerHTML = movie.title;
+        document.getElementsByClassName('movie-info-description-text')[0].innerHTML = movie.description + "<br><br>" + "Category: <b>" + movie.category + "<b>";
+        
+        const cinemasTimes = document.getElementsByClassName('cinemas-times')[0];
+        const cinemasTimesTitle = document.createElement('h1');
+        const cinemasTimesDiv = document.createElement('div');
+        cinemasTimesDiv.classList.add('session-info')
+        cinemasTimes.appendChild(cinemasTimesTitle);
+        cinemasTimes.appendChild(cinemasTimesDiv);
+
+
+        const showSessions = (cinemaName) => {
+            cinemasTimesTitle.innerHTML = cinemaName;
+            cinemasTimesDiv.innerHTML = '';
+            const sessionTimes = document.createElement('div');
+            sessionTimes.classList.add('session-info-column')
+            const sessionPrices = document.createElement('div');
+            sessionPrices.classList.add('session-info-column')
+            const timeTitle = document.createElement('p');
+            const priceTitle = document.createElement('p');
+            timeTitle.innerHTML = "<b>TIME<b>";
+            priceTitle.innerHTML = "<b>PRICE<b>";
+            sessionTimes.appendChild(timeTitle);
+            sessionPrices.appendChild(priceTitle);
+            cinemasTimesDiv.appendChild(sessionTimes);
+            cinemasTimesDiv.appendChild(sessionPrices);
+            
+            const sessionList = movie.cinema_details.filter(session => session.cinema_name === cinemaName);
+            sessionList.forEach((session) => {
+                const sessionTime = document.createElement('p');
+                const sessionPrice = document.createElement('p');
+                sessionTime.innerHTML = session.session_time.substring(0, session.session_time.length - 3);
+                sessionPrice.innerHTML = "$" + session.ticket_price;
+                sessionTimes.appendChild(sessionTime);
+                sessionPrices.appendChild(sessionPrice);
+                cinemasTimesDiv.appendChild(sessionTimes);
+                cinemasTimesDiv.appendChild(sessionPrices);        })
         }
-        divElement.addEventListener('click', function(event) {
-                    sessionStorage.setItem('movie', JSON.stringify(movie));
-                    window.location.href = 'movie.html';
-                })
-    });
 
-</script>
+        const cinemasContainer = document.getElementsByClassName('cinemas-container')[0];
+        const cinemaList = [...new Set(movie.cinema_details.map(cinema => cinema.cinema_name))];
+        cinemaList.forEach((cinema, index) => {
+            const divElement = document.createElement('div');
+            const imageElement = document.createElement('img');
+            imageElement.src = "https://cdn.openart.ai/published/Z7JQy3xW9aJK3SY471q7/3d5YZhxm_N1Tt_1024.webp";
+            const itemName = document.createTextNode(cinema);
+            divElement.appendChild(imageElement);
+            divElement.appendChild(itemName);
+            cinemasContainer.appendChild(divElement);
+            if(index == 0) {
+                divElement.classList.add('first-cinema');
+                showSessions(cinema);
+            } else if (index == cinemaList.length-1) {
+                divElement.classList.add('last-cinema');
+            } else {
+                divElement.classList.add('cinemas-container-div');
+            }
+            divElement.addEventListener('click', function(event) {
+                showSessions(cinema);
+                    })
+        });
+
+
+        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+        const leftScroll = (containerType) => {
+            const listContainer = document.getElementsByClassName(containerType)[0];
+            listContainer.scrollBy({
+                left: -vw * 0.19,
+                behavior: 'smooth'
+            });
+        }
+
+        const rightScroll = (containerType) => {
+            const listContainer = document.getElementsByClassName(containerType)[0];
+            listContainer.scrollBy({
+                left: vw * 0.19,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script src="./js/changeCity.js"></script>
+
 </body>
-
 </html>
