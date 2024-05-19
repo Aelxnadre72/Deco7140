@@ -1,0 +1,263 @@
+main {
+    padding: 0;
+    width: 100vw;
+  }
+
+.tickets {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+}
+
+.tickets-header {
+    text-align: start;
+    width: 75%;
+    margin-top: 2vh;
+    margin-left: 5%;
+    margin-bottom: 2vh;
+}
+
+.tickets-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.tickets-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+
+.tickets-container h1 {
+    padding-left: 3.3vw;
+    margin-bottom: 2vh;
+    font-size: 1.4rem;
+}
+
+.tickets-container-upcoming, .tickets-container-watched {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+}
+
+.tickets-container-upcoming-sessions, .tickets-container-watched-sessions {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90vw;
+    padding: 0 3.3vw;
+}
+
+.upcoming-sessions, .watched-sessions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #1b1b1b;
+    height: 25vw;
+    border-radius: 10px;
+    margin-bottom: 2vh;
+  }
+
+  .upcoming-sessions-info, .watched-sessions-info {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .upcoming-sessions-image,   .watched-sessions-image {
+    height: 100%;
+  }
+
+  .upcoming-sessions-image img, .watched-sessions-image img {
+    height: 100%;
+    width: 19.44vw;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .upcoming-sessions-text, .watched-sessions-text {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 3vw;
+    height: 100%;
+    overflow-y: hidden;
+    font-size: 1.1rem;
+    font-weight: 450;
+  }
+
+  .upcoming-sessions-text p, .watched-sessions-text p {
+    margin: 0;
+  }
+
+  .watched-sessions-rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 4vw;
+  }
+
+  .watched-sessions-rating p {
+    margin-top: 0;
+    margin-bottom: 1.2vh;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .upcoming-sessions-qr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding: 0 4vw;
+  }
+
+
+  .qr-code-btn {
+    text-align: center;
+    width: 17vw;
+    height: 17vw;
+    font-size: small;
+    font-weight: 550;
+    background-color: #d13f00;
+    border-radius: 10px;
+    border: 0;
+    color: white;
+    cursor: pointer;
+  }
+
+  .qr-code-btn:hover{
+    background-color: #9f3000;
+  }
+
+  .display-qr-code {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(7px);
+  }
+
+  .display-qr-code img {
+    width: 55vw;
+    object-fit: contain;
+  }
+
+  .rating-stars {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.4rem;
+  }
+
+  .fa-star {
+    margin: 0 2px;
+  }
+
+  .checked {
+    color: orange;
+  }
+  
+@media screen and (min-width: 768px) {
+
+    main {
+        display: flex;
+        margin-top: 2vh;
+    }
+
+    .tickets-header {
+        margin-left: 3.3%;
+    }
+
+    .tickets-container {
+        flex-direction: row;
+    }
+
+    .tickets-container h1 {
+        padding-left: 3.3vw;
+        margin-bottom: 2vh;
+        font-size: 1.4rem;
+    }
+
+    .tickets-container-upcoming, .tickets-container-watched {
+        justify-content: flex-start;
+        height: 100%;
+        width: 50%;
+    }
+
+    .upcoming-sessions-info, .watched-sessions-info {
+        width: 50%;
+    }
+    
+    .tickets-container-upcoming-sessions, .tickets-container-watched-sessions {
+        width: 50vw;
+    }
+
+    .upcoming-sessions, .watched-sessions {
+        height: 9vw;
+    }
+
+    .upcoming-sessions-image img, .watched-sessions-image img {
+        width: 7vw;
+    }
+
+    .upcoming-sessions-text, .watched-sessions-text {
+        padding: 0 1vw;
+        font-size: 1.4rem;
+        width: 20vw;
+        padding: 1vw 1.5vw;
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    .watched-sessions-rating {
+        padding: 0 1.5vw;
+    }
+
+    .upcoming-sessions-qr {
+        padding: 0 1.5vw;
+    }
+
+    .qr-code-btn {
+        width: 6vw;
+        height: 6vw;
+    }
+
+    .display-qr-code img {
+      width: 17vw;
+    }
+
+    .fa-star {
+        margin: 0 3px;
+        cursor: pointer;
+    }
+
+    .rating-stars {
+        font-size: 1.7rem;
+    }
+    
+
+    @media screen and (min-width: 768px) and (max-width:900px) {
+        .upcoming-sessions-text, .watched-sessions-text {
+            font-size: 1.2rem;
+        }
+    }
+    
+}

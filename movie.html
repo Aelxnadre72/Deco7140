@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page - Wacthies</title>
+    <title>Movie - Wacthies</title>
     <link rel="stylesheet" href="./css/website.css">
     <link rel="stylesheet" href="./css/movie.css">
 </head>
@@ -16,16 +16,18 @@
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
                 </div>
                 <div class="nav-items">
-                <div class="dropdown">
-                    <label class="dropdown-label-landscape">Showing cinemas in:</label>
-                    <label class="dropdown-label-portrait">City:</label>
-                    <select class="dropdown-menu" onchange="changeCity()">
-                        <option value="brisbane" selected>Brisbane</option>
-                        <option value="sydney">Sydney</option>
-                        <option value="melbourne">Melbourne</option>
-                    </select>
-                </div>
-                <button class="signin-btn">Sign In</button>
+                    <div class="dropdown">
+                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait">City:</label>
+                        <select class="dropdown-menu" onchange="changeCity()">
+                            <option value="brisbane" selected>Brisbane</option>
+                            <option value="sydney">Sydney</option>
+                            <option value="melbourne">Melbourne</option>
+                        </select>
+                    </div>
+                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" onclick="signOut()">Sign Out</button>
                 </div>
             </div>
         </nav>
@@ -42,7 +44,9 @@
                 </div>
             </div>
             <div class="movie-rating">
-                <p>1/10</p>
+                <p class="movie-rating-header">WATCHIES RATING</p>
+                <p class="movie-rating-score"></p>
+                <p class="movie-rating-users"></p>
             </div>
         </section>
         <section class="cinemas-section">
@@ -59,13 +63,48 @@
         </section>
     </main>
 
+    <script src="./js/fetchRatings.js"></script>
+    <script src="./js/handleUserSession.js"></script>
     <script>
         const movieString = sessionStorage.getItem('movie');
         const movie = JSON.parse(movieString);
-        console.log(movie);
         document.getElementsByClassName('movie-info-poster-image')[0].src = movie.image_url;
-        document.getElementsByClassName('movie-info-description-title')[0].innerHTML = movie.title;
+        document.getElementsByClassName('movie-info-description-title')[0].innerHTML = movie.title.toUpperCase();
         document.getElementsByClassName('movie-info-description-text')[0].innerHTML = movie.description + "<br><br>" + "Category: <b>" + movie.category + "<b>";
+
+        fetchRatings().then(data => {
+            let usersRatings = data.filter(rating => rating.username == movie.title);
+            console.log(data);
+            const newestRatingsMap = new Map();
+            console.log(usersRatings);
+            usersRatings.forEach(rating => {
+                console.log(rating.id);
+                if (!newestRatingsMap.has(rating.comment)) {
+                    newestRatingsMap.set(rating.comment, rating.id);
+                } else if (rating.id > newestRatingsMap.get(rating.comment)) {
+                    newestRatingsMap.set(rating.comment, rating.id);
+                }
+            });
+            const newestRatingsArray = Array.from(newestRatingsMap.values());
+            if(newestRatingsArray.length == 0) {
+                document.getElementsByClassName('movie-rating-score')[0].innerHTML = "-/5";
+                document.getElementsByClassName('movie-rating-users')[0].innerHTML = "0 USER RATINGS";
+            } else {
+                usersRatings = usersRatings.filter(rating => newestRatingsArray.includes(rating.id));
+                usersRatings = usersRatings.map(rating => parseInt(rating.rating));
+                const sum = usersRatings.reduce((sum, value) => {
+                    return sum + value;
+                });
+                console.log(sum);
+                let avg = sum/newestRatingsArray.length;
+                if(avg != 5) {
+                    avg = Number.isInteger(avg) ? `${avg}.0` : `${avg.toFixed(1)}`;
+                }
+                document.getElementsByClassName('movie-rating-score')[0].innerHTML = avg + "/5";
+                document.getElementsByClassName('movie-rating-users')[0].innerHTML = newestRatingsArray.length == 1 ? 
+                newestRatingsArray.length + " USER RATING" : newestRatingsArray.length + " USER RATINGS";
+            }
+        });
         
         const cinemasTimes = document.getElementsByClassName('cinemas-times')[0];
         const cinemasTimesTitle = document.createElement('h1');
@@ -100,7 +139,8 @@
                 sessionTimes.appendChild(sessionTime);
                 sessionPrices.appendChild(sessionPrice);
                 cinemasTimesDiv.appendChild(sessionTimes);
-                cinemasTimesDiv.appendChild(sessionPrices);        })
+                cinemasTimesDiv.appendChild(sessionPrices);        
+            })
         }
 
         const cinemasContainer = document.getElementsByClassName('cinemas-container')[0];

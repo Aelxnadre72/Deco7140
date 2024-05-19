@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema - Wacthies</title>
+    <link rel="stylesheet" href="./css/website.css">
+    <link rel="stylesheet" href="./css/tickets.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
+                </div>
+                <div class="nav-items">
+                    <div class="dropdown">
+                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait">City:</label>
+                        <select class="dropdown-menu" onchange="changeCity()">
+                            <option value="brisbane" selected>Brisbane</option>
+                            <option value="sydney">Sydney</option>
+                            <option value="melbourne">Melbourne</option>
+                        </select>
+                    </div>
+                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" onclick="signOutMyTickets()">Sign Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="tickets">
+            <div class="tickets-header">
+                <h1>MY TICKETS</h1>
+            </div>
+            <div class="tickets-container">
+                <div class="tickets-container-upcoming">
+                    <h1>Upcoming</h1>
+                    <div class="tickets-container-upcoming-sessions">
+                        
+                    </div>
+                </div>
+                <div class="tickets-container-watched">
+                    <h1>Watched</h1>
+                    <div class="tickets-container-watched-sessions">
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="display-qr-code" onclick="closeQr()">
+            <img onclick="" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png">
+        </section>
+    </main>
+
+    <script src="./js/fetchRatings.js"></script>
+    <script src="./js/fetchMovies.js"></script>
+    <script src="./js/postRatings.js"></script>
+    <script src="./js/handleUserSession.js"></script>
+    <script>
+        const email = sessionStorage.getItem('email');
+        if(email === "" || email === null) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementsByClassName("signout-btn")[0].style.display = "block";
+        }
+
+        const openQr = () => {
+            document.getElementsByClassName("display-qr-code")[0].style.display = "flex";
+        }
+
+        const closeQr = () => {
+            document.getElementsByClassName("display-qr-code")[0].style.display = "none";
+        }
+
+        const upcomingSessionsContainer = document.getElementsByClassName('tickets-container-upcoming-sessions')[0];
+        const watchedSessionsContainer = document.getElementsByClassName('tickets-container-watched-sessions')[0];
+
+        const checkStars = (starClassName, index) => {
+            const stars = document.getElementsByClassName(starClassName);
+            for(let i = 0; i < 5; i++) {
+                if(i <= index) {
+                    stars[i].classList.add("checked");
+                } else {
+                    stars[i].classList.remove("checked");
+                }
+            }
+        }
+
+        const setUpcoming = (movie) => {
+            const upcomingSessions = document.createElement("div");
+            upcomingSessions.className = "upcoming-sessions";
+
+            const upcomingSessionsInfo = document.createElement("div");
+            upcomingSessionsInfo.className = "upcoming-sessions-info";
+
+            const upcomingSessionsImage = document.createElement("div");
+            upcomingSessionsImage.className = "upcoming-sessions-image";
+
+            const upcomingImg = document.createElement("img");
+            upcomingImg.src = movie.image_url;
+            upcomingSessionsImage.appendChild(upcomingImg);
+
+            const upcomingSessionsText = document.createElement("div");
+            upcomingSessionsText.className = "upcoming-sessions-text";
+
+            const upcomingText = document.createElement("p");
+            upcomingText.innerHTML = movie.title;
+            upcomingSessionsText.appendChild(upcomingText);
+
+            upcomingSessionsInfo.appendChild(upcomingSessionsImage);
+            upcomingSessionsInfo.appendChild(upcomingSessionsText);
+
+            const upcomingSessionsQr = document.createElement("div");
+            upcomingSessionsQr.className = "upcoming-sessions-qr";
+
+            const qrCodeBtn = document.createElement("button");
+            qrCodeBtn.className = "qr-code-btn";
+            qrCodeBtn.innerHTML = "QR CODE";
+            qrCodeBtn.addEventListener('click', openQr);
+            upcomingSessionsQr.appendChild(qrCodeBtn);
+
+            upcomingSessions.appendChild(upcomingSessionsInfo);
+            upcomingSessions.appendChild(upcomingSessionsQr);
+            upcomingSessionsContainer.appendChild(upcomingSessions);
+        }
+
+        const setWatched = (movie, rating) => {
+            const watchedSessions = document.createElement("div");
+            watchedSessions.className = "watched-sessions";
+
+            const watchedSessionsInfo = document.createElement("div");
+            watchedSessionsInfo.className = "watched-sessions-info";
+
+            const watchedSessionsImage = document.createElement("div");
+            watchedSessionsImage.className = "watched-sessions-image";
+
+            const watchedImg = document.createElement("img");
+            watchedImg.src = movie.image_url;
+            watchedSessionsImage.appendChild(watchedImg);
+
+            const watchedSessionsText = document.createElement("div");
+            watchedSessionsText.className = "watched-sessions-text";
+
+            const watchedText = document.createElement("p");
+            watchedText.innerHTML = movie.title;
+            watchedSessionsText.appendChild(watchedText);
+
+            watchedSessionsInfo.appendChild(watchedSessionsImage);
+            watchedSessionsInfo.appendChild(watchedSessionsText);
+
+            const watchedSessionsRating = document.createElement("div");
+            watchedSessionsRating.className = "watched-sessions-rating";
+
+            const ratingText = document.createElement("p");
+            ratingText.innerHTML = "Your rating:";
+            watchedSessionsRating.appendChild(ratingText);
+
+            const ratingStars = document.createElement("div");
+            ratingStars.className = "rating-stars";
+
+            let starClassName = movie.title + "star";
+                starClassName = starClassName.replaceAll(" ", "");
+                starClassName = starClassName.replaceAll("!", "");
+                starClassName = starClassName.replaceAll(",", "");
+                starClassName = starClassName.replaceAll(".", "");
+                starClassName = starClassName.replaceAll(":", "");
+                starClassName = starClassName.replaceAll(";", "");
+                
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement("span");
+                star.className = "fa fa-star";
+                star.classList.add(starClassName);
+                star.addEventListener("click", function () {
+                    postRatings(movie, email, i+1);
+                    checkStars(starClassName, i);
+                });
+                if(i < rating) {
+                    star.classList.add("checked");
+                }
+                ratingStars.appendChild(star);
+            }
+
+            watchedSessionsRating.appendChild(ratingStars);
+            watchedSessions.appendChild(watchedSessionsInfo);
+            watchedSessions.appendChild(watchedSessionsRating);
+            watchedSessionsContainer.appendChild(watchedSessions);
+        }
+
+
+        let usersRatings;
+        fetchRatings().then(data => {
+            usersRatings = data.filter(rating => rating.comment == email);
+        });
+
+        fetchMovies().then(data => {
+            const randomNumber = Math.floor(Math.random() * data.length);
+            data.forEach((movie, index) => {
+                console.log(movie);
+                if(index == randomNumber) {
+                    setUpcoming(movie);
+                } else {
+                    const movieRatings = usersRatings.filter(rating => rating.username == movie.title);
+                    console.log(movieRatings);
+                    if(movieRatings.length > 0) {
+                        movieRatings.sort((r1, r2) => r2.id - r1.id);
+                        setWatched(movie, movieRatings[0].rating);
+                    } else {
+                        setWatched(movie, 0);
+                    }
+                }
+            });
+        });
+
+    </script>
+
+    <script src="./js/changeCity.js"></script>
+
+</body>
+</html>

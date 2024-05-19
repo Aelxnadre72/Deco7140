@@ -1,0 +1,279 @@
+main {
+    padding: 0;
+    width: 100vw;
+  }
+
+.login {
+  display: flex;
+  width: 100%;
+  height: 70vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 70vw;
+  height: 45vh;
+  background-color: #1b1b1b;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  align-items: center;
+}
+
+#invalid-error {
+  display: none;
+  color: #9f3000;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 55%;
+  justify-content: center;
+}
+
+#login-form h2 {
+  margin-top: 0;
+  align-self: flex-start;
+  font-weight: 600;
+}
+
+.email-container {
+  width: 100%;
+  margin: 0.3vh 0;
+  height: 11%;
+}
+
+.password-container {
+  width: 100%;
+  margin: 0.3vh 0;
+  height: 11%;
+}
+
+::-webkit-input-placeholder {
+  color:#393939;
+  font-weight: 500;
+}
+
+.email-container input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0px solid #ffffff;
+  background-color: #f6f4ef;
+}
+
+.password-container input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 0px solid #ffffff;
+  background-color: #f6f4ef;
+}
+
+.button-container {
+  width: 100%;
+  margin: 2vh 0;
+  height: 11%;
+}
+
+.button-container button {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: #d13f00; 
+  cursor: pointer; 
+  border: 0px solid #ffffff;
+  color: white;
+  font-weight: 500;
+}
+
+.button-container button:hover {
+  background-color: #9f3000;
+
+}
+
+.tickets-header {
+    text-align: start;
+    width: 75%;
+    margin-top: 2vh;
+    margin-left: 5%;
+    margin-bottom: 2vh;
+}
+
+.tickets-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.tickets-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+
+.tickets-container h1 {
+    padding-left: 3.3vw;
+    margin-bottom: 2vh;
+    font-size: 1.4rem;
+}
+
+.tickets-container-upcoming, .tickets-container-watched {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+}
+
+.tickets-container-upcoming-sessions, .tickets-container-watched-sessions {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90vw;
+    padding: 0 3.3vw;
+}
+
+.upcoming-sessions, .watched-sessions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #1b1b1b;
+    height: 25vw;
+    border-radius: 10px;
+    margin-bottom: 2vh;
+  }
+
+  .upcoming-sessions-info, .watched-sessions-info {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .upcoming-sessions-image,   .watched-sessions-image {
+    height: 100%;
+  }
+
+  .upcoming-sessions-image img, .watched-sessions-image img {
+    height: 100%;
+    width: 19.44vw;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .upcoming-sessions-text, .watched-sessions-text {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 3vw;
+    height: 100%;
+    overflow-y: hidden;
+    font-size: 1.1rem;
+    font-weight: 450;
+  }
+
+  .upcoming-sessions-text p, .watched-sessions-text p {
+    margin: 0;
+  }
+
+  .watched-sessions-rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 4vw;
+  }
+
+  .watched-sessions-rating p {
+    margin-top: 0;
+    margin-bottom: 1.2vh;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .upcoming-sessions-qr {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding: 0 4vw;
+  }
+
+
+  .qr-code-btn {
+    text-align: center;
+    width: 17vw;
+    height: 17vw;
+    font-size: small;
+    font-weight: 550;
+    background-color: #d13f00;
+    border-radius: 10px;
+    border: 0;
+    color: white;
+    cursor: pointer;
+  }
+
+  .qr-code-btn:hover{
+    background-color: #9f3000;
+  }
+
+  .rating-stars {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.4rem;
+  }
+
+  .fa-star {
+    margin: 0 2px;
+  }
+
+  .checked {
+    color: orange;
+  }
+  
+@media screen and (min-width: 768px) {
+
+    main {
+        display: flex;
+        margin-top: 2vh;
+    }
+
+    .login-container {
+      width: 25vw;
+      height: 42vh;
+    }
+
+    @media screen and (min-width: 768px) and (max-width:900px) {
+        .login-container {
+          width: 50vw;
+          height: 55vh;
+        }
+    }
+    
+}

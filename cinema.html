@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema - Wacthies</title>
+    <link rel="stylesheet" href="./css/website.css">
+    <link rel="stylesheet" href="./css/cinema.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
+                </div>
+                <div class="nav-items">
+                    <div class="dropdown">
+                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait">City:</label>
+                        <select class="dropdown-menu" onchange="changeCity()">
+                            <option value="brisbane" selected>Brisbane</option>
+                            <option value="sydney">Sydney</option>
+                            <option value="melbourne">Melbourne</option>
+                        </select>
+                    </div>
+                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" onclick="signOut()">Sign Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="cinema">
+            <div class="cinema-info">
+                <div class="cinema-info-div">
+                    <img class="cinema-info-image"></img>
+                </div>
+                <div class="cinema-info-description">
+                    <h1 class="cinema-info-description-title"></h1>
+                </div>
+            </div>
+        </section>
+        <section class="session-section">
+            <h1 class="session-section-title">Movie sessions</h1>
+            <div class="session-section-content">
+                <div class="session-times"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./js/fetchMovies.js"></script>
+    <script src="./js/handleUserSession.js"></script>
+    <script>
+        const cinemaName = sessionStorage.getItem('cinema');
+        document.getElementsByClassName('cinema-info-image')[0].src = "https://cdn.openart.ai/published/Z7JQy3xW9aJK3SY471q7/3d5YZhxm_N1Tt_1024.webp";
+        document.getElementsByClassName('cinema-info-description-title')[0].innerHTML = cinemaName;
+
+        const showSessions = (movieName, sessions) => {
+            const sessionTimes = document.getElementsByClassName('session-times')[0];
+            const sessionTimesTitle = document.createElement('h1');
+            const sessionTimesDiv = document.createElement('div');
+            sessionTimesDiv.classList.add('session-info')
+            sessionTimes.appendChild(sessionTimesTitle);
+            sessionTimes.appendChild(sessionTimesDiv);
+            sessionTimesTitle.innerHTML = movieName;
+
+            const sessionTimesColumn = document.createElement('div');
+            sessionTimesColumn.classList.add('session-info-column')
+            const sessionPricesColumn = document.createElement('div');
+            sessionPricesColumn.classList.add('session-info-column')
+
+            sessions.forEach((session) => {
+                const timeText = document.createElement('p');
+                const priceText = document.createElement('p');
+                timeText.innerHTML = session.session_time.substring(0, session.session_time.length - 3);
+                priceText.innerHTML = "$" + session.ticket_price;
+                sessionTimesColumn.appendChild(timeText);
+                sessionPricesColumn.appendChild(priceText);
+            })
+            
+            sessionTimesDiv.appendChild(sessionTimesColumn);
+            sessionTimesDiv.appendChild(sessionPricesColumn);
+        }
+
+        fetchMovies().then(data => {
+            data.forEach((movie) => {
+                const sessions = movie.cinema_details.filter((session) => session.cinema_name == cinemaName);
+                if(sessions.length > 0) {
+                    sessions.sort((s1, s2) => s1.session_time.replaceAll(":", "") - s2.session_time.replaceAll(":", ""));
+                    showSessions(movie.title, sessions);
+                }
+            });
+        });
+
+    </script>
+
+    <script src="./js/changeCity.js"></script>
+
+</body>
+</html>
