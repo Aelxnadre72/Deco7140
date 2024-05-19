@@ -4,3 +4,10 @@
 ![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/1845450d-7e9e-4695-8dd6-61402a4c0bf3)
 ![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/d7ca78e0-fabb-499c-88b2-e42ab0fa4b35)
 ![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/3f771dab-eb32-4614-a82c-a75ff250a548)
+
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/02cca474-1bd1-4db5-9f55-be3db9da16f6)
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/0483afa7-3ced-417c-a841-5270242b01a9)
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/e5e50297-370a-4ce8-94bc-8c49c6186897)
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/2ce5e7ad-1808-4ce1-829a-0c984ced09d7)
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/33ec580c-2e76-4bc4-9d6e-a01219ae8316)
+![image](https://github.com/Aelxnadre72/deco7140/assets/57238175/7d6f05e6-b421-4d51-846f-94b3b3377bca)
