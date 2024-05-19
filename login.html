@@ -46,7 +46,7 @@
                     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     if(regex.test(email)) {
                         sessionStorage.setItem("email", email.toLowerCase());
-                        history.back();
+                        document.referrer ? window.location = document.referrer : history.back();
                     } else {
                         const errorMessage = document.getElementById('invalid-error');
                         errorMessage.style.display = "block";
