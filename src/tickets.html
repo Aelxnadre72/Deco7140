@@ -11,50 +11,50 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo">
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
                 </div>
                 <div class="nav-items">
                     <div class="dropdown">
-                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
-                        <label class="dropdown-label-portrait">City:</label>
-                        <select class="dropdown-menu" onchange="changeCity()">
+                        <label class="dropdown-label-landscape" for="city-select">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait" for="city-select">City:</label>
+                        <select class="dropdown-menu" id="city-select" aria-label="Select City" onchange="changeCity()">
                             <option value="brisbane" selected>Brisbane</option>
                             <option value="sydney">Sydney</option>
                             <option value="melbourne">Melbourne</option>
                         </select>
                     </div>
-                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
-                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
-                    <button class="signout-btn" onclick="signOutMyTickets()">Sign Out</button>
+                    <button class="mytickets-btn" aria-label="My Tickets" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" aria-label="Sign In" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" aria-label="Sign Out" onclick="signOutMyTickets()">Sign Out</button>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <section class="tickets">
+        <section class="tickets" aria-labelledby="tickets-title">
             <div class="tickets-header">
-                <h1>MY TICKETS</h1>
+                <h1 id="tickets-title">My Tickets</h1>
             </div>
             <div class="tickets-container">
-                <div class="tickets-container-upcoming">
-                    <h1>Upcoming</h1>
-                    <div class="tickets-container-upcoming-sessions">
+                <div class="tickets-container-upcoming" aria-labelledby="upcoming-title">
+                    <h1 id="upcoming-title">Upcoming</h1>
+                    <div class="tickets-container-upcoming-sessions" aria-label="Upcoming Sessions">
                         
                     </div>
                 </div>
-                <div class="tickets-container-watched">
-                    <h1>Watched</h1>
-                    <div class="tickets-container-watched-sessions">
+                <div class="tickets-container-watched" aria-labelledby="watched-title">
+                    <h1 id="watched-title">Watched</h1>
+                    <div class="tickets-container-watched-sessions" aria-label="Watched Sessions">
                         
                     </div>
                 </div>
             </div>
         </section>
-        <section class="display-qr-code" onclick="closeQr()">
-            <img onclick="" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png">
+        <section class="display-qr-code" aria-label="QR Code Display" onclick="closeQr()">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png" alt="QR Code">
         </section>
     </main>
 
@@ -123,8 +123,17 @@
             qrCodeBtn.className = "qr-code-btn";
             qrCodeBtn.innerHTML = "QR CODE";
             qrCodeBtn.addEventListener('click', openQr);
+            qrCodeBtn.tabIndex = 0;
+            qrCodeBtn.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    qrCodeBtn.click();  
+                } else if (event.key === "Escape") {
+                    event.preventDefault(); 
+                    closeQr();
+                }
+            });
             upcomingSessionsQr.appendChild(qrCodeBtn);
-
             upcomingSessions.appendChild(upcomingSessionsInfo);
             upcomingSessions.appendChild(upcomingSessionsQr);
             upcomingSessionsContainer.appendChild(upcomingSessions);
@@ -176,10 +185,19 @@
                 const star = document.createElement("span");
                 star.className = "fa fa-star";
                 star.classList.add(starClassName);
+                star.tabIndex = 0;
                 star.addEventListener("click", function () {
                     postRatings(movie, email, i+1);
                     checkStars(starClassName, i);
                 });
+
+                star.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); 
+                        star.click();  
+                    }
+                });
+
                 if(i < rating) {
                     star.classList.add("checked");
                 }
@@ -193,27 +211,26 @@
         }
 
 
-        let usersRatings;
         fetchRatings().then(data => {
-            usersRatings = data.filter(rating => rating.comment == email);
-        });
+            const usersRatings = data.filter(rating => rating.comment == email);
 
-        fetchMovies().then(data => {
-            const randomNumber = Math.floor(Math.random() * data.length);
-            data.forEach((movie, index) => {
-                console.log(movie);
-                if(index == randomNumber) {
-                    setUpcoming(movie);
-                } else {
-                    const movieRatings = usersRatings.filter(rating => rating.username == movie.title);
-                    console.log(movieRatings);
-                    if(movieRatings.length > 0) {
-                        movieRatings.sort((r1, r2) => r2.id - r1.id);
-                        setWatched(movie, movieRatings[0].rating);
+            fetchMovies().then(data => {
+                const randomNumber = Math.floor(Math.random() * data.length);
+                data.forEach((movie, index) => {
+                    console.log(movie);
+                    if(index == randomNumber) {
+                        setUpcoming(movie);
                     } else {
-                        setWatched(movie, 0);
+                        const movieRatings = usersRatings.filter(rating => rating.username == movie.title);
+                        console.log(movieRatings);
+                        if(movieRatings.length > 0) {
+                            movieRatings.sort((r1, r2) => r2.id - r1.id);
+                            setWatched(movie, movieRatings[0].rating);
+                        } else {
+                            setWatched(movie, 0);
+                        }
                     }
-                }
+                });
             });
         });
 

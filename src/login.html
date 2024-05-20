@@ -11,26 +11,27 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo">
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
                 </div>
+            </div>
         </nav>
     </header>
     <main>
-        <section class="login">
+        <section class="login" aria-labelledby="login-title">
             <div class="login-container">
-                <form id="login-form" onsubmit="validateForm(event)">
-                    <h2>Sign In</h2>
+                <form id="login-form" onsubmit="validateForm(event)" aria-describedby="invalid-error">
+                    <h2 id="login-title">Sign In</h2>
                     <div class="email-container">
-                        <input type="email" id="email" name="email" placeholder="Email" required>
+                        <input type="email" id="email" name="email" placeholder="Email" required aria-required="true">
                     </div>
                     <div class="password-container">
-                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <input type="password" id="password" name="password" placeholder="Password" required aria-required="true">
                     </div>
                     <div class="button-container">
-                        <button type="submit">Sign In</button>
+                        <button type="submit" aria-label="Sign In">Sign In</button>
                     </div>
                     <p id="invalid-error">Please enter a valid email address.</p>
                 </form>
@@ -46,7 +47,7 @@
                     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     if(regex.test(email)) {
                         sessionStorage.setItem("email", email.toLowerCase());
-                        history.back();
+                        document.referrer ? window.location = document.referrer : history.back();
                     } else {
                         const errorMessage = document.getElementById('invalid-error');
                         errorMessage.style.display = "block";

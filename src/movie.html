@@ -10,55 +10,55 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo">
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
                 </div>
                 <div class="nav-items">
                     <div class="dropdown">
-                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
-                        <label class="dropdown-label-portrait">City:</label>
-                        <select class="dropdown-menu" onchange="changeCity()">
+                        <label class="dropdown-label-landscape" for="city-select">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait" for="city-select">City:</label>
+                        <select class="dropdown-menu" id="city-select" aria-label="Select City" onchange="changeCity()">
                             <option value="brisbane" selected>Brisbane</option>
                             <option value="sydney">Sydney</option>
                             <option value="melbourne">Melbourne</option>
                         </select>
                     </div>
-                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
-                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
-                    <button class="signout-btn" onclick="signOut()">Sign Out</button>
+                    <button class="mytickets-btn" aria-label="My Tickets" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" aria-label="Sign In" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" aria-label="Sign Out" onclick="signOut()">Sign Out</button>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <section class="movie">
+        <section class="movie" aria-labelledby="movie-info-title">
             <div class="movie-info">
                 <div class="movie-info-poster">
-                    <img class="movie-info-poster-image"></img>
+                    <img class="movie-info-poster-image" alt="Movie Poster Image">
                 </div>
                 <div class="movie-info-description">
-                    <h1 class="movie-info-description-title"></h1>
-                    <p class="movie-info-description-text"></p>
+                    <h1 id="movie-info-title" class="movie-info-description-title">Movie Title</h1>
+                    <p class="movie-info-description-text">Movie Description</p>
                 </div>
             </div>
             <div class="movie-rating">
                 <p class="movie-rating-header">WATCHIES RATING</p>
-                <p class="movie-rating-score"></p>
-                <p class="movie-rating-users"></p>
+                <p class="movie-rating-score" aria-label="Movie Rating Score"></p>
+                <p class="movie-rating-users" aria-label="Number of Users Rated"></p>
             </div>
         </section>
-        <section class="cinemas-section">
-            <h1 class="cinemas-section-title">Choose your cinema</h1>
+        <section class="cinemas-section" aria-labelledby="cinemas-section-title">
+            <h1 id="cinemas-section-title" class="cinemas-section-title">Choose your cinema</h1>
             <div class="cinema-section-content">
                 <div class="cinemas">
-                    <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
-                    <div class="cinemas-container">
+                    <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow" aria-label="Scroll Left"><</h1>
+                    <div class="cinemas-container" role="list" aria-label="Cinemas List">
                     </div>
-                    <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
+                    <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow" aria-label="Scroll Right">></h1>
                 </div>
-                <div class="cinemas-times"></div>
+                <div class="cinemas-times" aria-label="Cinema Times"></div>
             </div>
         </section>
     </main>
@@ -161,9 +161,19 @@
             } else {
                 divElement.classList.add('cinemas-container-div');
             }
+
+            divElement.tabIndex = 0;
+
             divElement.addEventListener('click', function(event) {
                 showSessions(cinema);
-                    })
+            });
+
+            divElement.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    divElement.click();  
+                }
+            });
         });
 
 

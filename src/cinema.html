@@ -10,43 +10,43 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo">
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
                 </div>
                 <div class="nav-items">
                     <div class="dropdown">
-                        <label class="dropdown-label-landscape">Showing cinemas in:</label>
-                        <label class="dropdown-label-portrait">City:</label>
-                        <select class="dropdown-menu" onchange="changeCity()">
+                        <label class="dropdown-label-landscape" for="city-select">Showing cinemas in:</label>
+                        <label class="dropdown-label-portrait" for="city-select">City:</label>
+                        <select class="dropdown-menu" id="city-select" aria-label="Select City" onchange="changeCity()">
                             <option value="brisbane" selected>Brisbane</option>
                             <option value="sydney">Sydney</option>
                             <option value="melbourne">Melbourne</option>
                         </select>
                     </div>
-                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
-                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
-                    <button class="signout-btn" onclick="signOut()">Sign Out</button>
+                    <button class="mytickets-btn" aria-label="My Tickets" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" aria-label="Sign In" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" aria-label="Sign Out" onclick="signOut()">Sign Out</button>
                 </div>
             </div>
         </nav>
     </header>
     <main>
-        <section class="cinema">
+        <section class="cinema" aria-labelledby="cinema-info-title">
             <div class="cinema-info">
                 <div class="cinema-info-div">
-                    <img class="cinema-info-image"></img>
+                    <img class="cinema-info-image" alt="Cinema Image">
                 </div>
                 <div class="cinema-info-description">
-                    <h1 class="cinema-info-description-title"></h1>
+                    <h1 id="cinema-info-title" class="cinema-info-description-title">Cinema Information</h1>
                 </div>
             </div>
         </section>
-        <section class="session-section">
-            <h1 class="session-section-title">Movie sessions</h1>
+        <section class="session-section" aria-labelledby="session-section-title">
+            <h1 id="session-section-title" class="session-section-title">Movie sessions</h1>
             <div class="session-section-content">
-                <div class="session-times"></div>
+                <div class="session-times" aria-label="Session Times"></div>
             </div>
         </section>
     </main>

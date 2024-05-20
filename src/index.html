@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main Navigation">
             <div class="nav-container">
                 <div class="logo">
                     <a href="index.html"><img src="./media/logo.png" alt="Movie Logo"></a>
@@ -19,37 +19,37 @@
                     <div class="dropdown">
                         <label class="dropdown-label-landscape">Showing cinemas in:</label>
                         <label class="dropdown-label-portrait">City:</label>
-                        <select class="dropdown-menu" onchange="changeCity()">
+                        <select class="dropdown-menu" aria-label="Select City" onchange="changeCity()">
                             <option value="brisbane" selected>Brisbane</option>
                             <option value="sydney">Sydney</option>
                             <option value="melbourne">Melbourne</option>
                         </select>
                     </div>
-                    <button class="mytickets-btn" onclick="window.location.href='tickets.html'">My Tickets</button>
-                    <button class="signin-btn" onclick="window.location.href='login.html'">Sign In</button>
-                    <button class="signout-btn" onclick="signOut()">Sign Out</button>
+                    <button class="mytickets-btn" aria-label="My Tickets" onclick="window.location.href='tickets.html'">My Tickets</button>
+                    <button class="signin-btn" aria-label="Sign In" onclick="window.location.href='login.html'">Sign In</button>
+                    <button class="signout-btn" aria-label="Sign Out" onclick="signOut()">Sign Out</button>
                 </div>
             </div>
         </nav>
     </header>
-
+    
     <main>            
         <h1 class="movies-title">Currently in cinemas</h1>
-        <section class="movies">
-            <h1 onclick="leftScroll('movies-container')" class="movies-left-arrow"><</h1>
-            <div class="movies-container">
-
+        <section class="movies" aria-labelledby="movies-title">
+            <h1 id="movies-left-arrow" onclick="leftScroll('movies-container')" class="movies-left-arrow" aria-label="Scroll Left"><</h1>
+            <div class="movies-container" role="list" aria-label="Movie List">
+    
             </div>
-            <h1 onclick="rightScroll('movies-container')" class="movies-right-arrow"><</h1>
+            <h1 id="movies-right-arrow" onclick="rightScroll('movies-container')" class="movies-right-arrow" aria-label="Scroll Right"><</h1>
         </section>
         
         <h1 class="cinemas-title">Cinemas in Brisbane</h1>
-        <section class="cinemas">
-            <h1 onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow"><</h1>
-            <div class="cinemas-container">
-
+        <section class="cinemas" aria-labelledby="cinemas-title">
+            <h1 id="cinemas-left-arrow" onclick="leftScroll('cinemas-container')" class="cinemas-left-arrow" aria-label="Scroll Left"><</h1>
+            <div class="cinemas-container" role="list" aria-label="Cinemas List">
+    
             </div>
-            <h1 onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow"><</h1>
+            <h1 id="cinemas-right-arrow" onclick="rightScroll('cinemas-container')" class="cinemas-right-arrow" aria-label="Scroll Right"><</h1>
         </section>
     </main>
     
@@ -77,10 +77,19 @@
                     divElement.classList.add('movies-container-div');
                 }
 
+                divElement.tabIndex = 0;
+
                 divElement.addEventListener('click', function(event) {
                     sessionStorage.setItem('movie', JSON.stringify(movie));
                     window.location.href = 'movie.html';
                 })
+
+                divElement.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); 
+                        divElement.click();  
+                    }
+                });
             });
 
             const cinemaList = [...new Set(data.flatMap(movie => movie.cinema_details
@@ -101,10 +110,19 @@
                         divElement.classList.add('cinemas-container-div');
                     }
 
+                    divElement.tabIndex = 0;
+
                     divElement.addEventListener('click', function(event) {
-                    sessionStorage.setItem('cinema', cinema);
-                    window.location.href = 'cinema.html';
-                })
+                        sessionStorage.setItem('cinema', cinema);
+                        window.location.href = 'cinema.html';
+                    });
+
+                    divElement.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter') {
+                            event.preventDefault(); 
+                            divElement.click();  
+                        }
+                    });
                 });
         });
 
